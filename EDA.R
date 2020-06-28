@@ -1,17 +1,20 @@
 # install.packages("rwhatsapp")
-# install.packages("dplyr")
 library(rwhatsapp)
 library(dplyr)
-
-
+library(ggplot2); theme_set(theme_minimal())
+library(lubridate)
+library(tidyr)
+library(ggimage)
 # Load Data -----------------------------------------------------------------------------------
 
-chat <- rwa_read("your_exported_data.txt") %>% 
+#import and check structure of data
+chat <- rwa_read("tess1.txt") %>% 
         filter(!is.na(author)) 
 str(chat)
+summary(chat)
 
-library("ggplot2"); theme_set(theme_minimal())
-library("lubridate")
+
+# Messages per day
 
 chat %>%
         mutate(day = date(time)) %>%
@@ -20,6 +23,8 @@ chat %>%
         geom_bar(stat = "identity") +
         ylab("") + xlab("") +
         ggtitle("Messages per day")
+
+# Number of messages
 
 chat %>%
         mutate(day = date(time)) %>%
@@ -30,7 +35,8 @@ chat %>%
         coord_flip() +
         ggtitle("Number of messages")
 
-library("tidyr")
+# Most often used emotes
+
 chat %>%
         unnest(emoji) %>%
         count(author, emoji, sort = TRUE) %>%
@@ -45,7 +51,7 @@ chat %>%
         ggtitle("Most often used emojis")
 
 
-library("ggimage")
+
 emoji_data <- rwhatsapp::emojis %>% # data built into package
         mutate(hex_runes1 = gsub("\\s[[:alnum:]]+", "", hex_runes)) %>% # ignore combined emojis
         mutate(emoji_url = paste0("https://abs.twimg.com/emoji/v2/72x72/", 
