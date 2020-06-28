@@ -1,4 +1,8 @@
 # Whatsapp-Chat-analysis
-open EDA.R
+
+Open:
+```
+EDA.R
+```
 ## Word Cloud 
  ![](images/frnd.png)
