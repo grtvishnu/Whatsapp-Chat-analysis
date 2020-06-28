@@ -20,7 +20,7 @@ summary(chat)
 
 chat_py <- chat %>% 
         select(author,text)
-write_csv(chat_py,"chat_py.csv")
+write_csv(chat_py,"chat_py.csv") 
 
 # Messages per day
 
