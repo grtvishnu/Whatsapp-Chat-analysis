@@ -4,23 +4,27 @@ Open:
 ```
 EDA.R
 ```
-## Messages per day
+## Statistical Analysing 
+### Messages per day
  ![](images/msg_per_day.png)
  
-## Most Often used Emojis
+### Most Often used Emojis
  ![](images/emoji.png)
  
-## Total Messages
+### Total Messages
  ![](images/tot_msg.png)
 
-## MostOften used words
+### MostOften used words
  ![](images/most_often.png)
  
-## Lexical Diversity
+### Lexical Diversity
  ![](images/lex.png)
 
-## Important Words Used
+### Important Words Used
  ![](images/imp_word.png)
  
+ ```
+Export chat_py.csv from EDA.R and input that csv to Word_cloud.py 
+```
 ## Word Cloud 
  ![](images/frnd.png)
