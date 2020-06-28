@@ -5,6 +5,8 @@ library(ggplot2); theme_set(theme_minimal())
 library(lubridate)
 library(tidyr)
 library(ggimage)
+library(tidytext)
+library(stopwords)
 # Load Data -----------------------------------------------------------------------------------
 
 #import and check structure of data
@@ -37,21 +39,6 @@ chat %>%
 
 # Most often used emotes
 
-chat %>%
-        unnest(emoji) %>%
-        count(author, emoji, sort = TRUE) %>%
-        group_by(author) %>%
-        top_n(n = 6, n) %>%
-        ggplot(aes(x = reorder(emoji, n), y = n, fill = author)) +
-        geom_col(show.legend = FALSE) +
-        ylab("") +
-        xlab("") +
-        coord_flip() +
-        facet_wrap(~author, ncol = 2, scales = "free_y")  +
-        ggtitle("Most often used emojis")
-
-
-
 emoji_data <- rwhatsapp::emojis %>% # data built into package
         mutate(hex_runes1 = gsub("\\s[[:alnum:]]+", "", hex_runes)) %>% # ignore combined emojis
         mutate(emoji_url = paste0("https://abs.twimg.com/emoji/v2/72x72/", 
@@ -74,7 +61,8 @@ chat %>%
         theme(axis.text.y = element_blank(),
               axis.ticks.y = element_blank())
 
-library("tidytext")
+# Most often used words
+
 chat %>%
         unnest_tokens(input = text,
                       output = word) %>%
@@ -90,17 +78,22 @@ chat %>%
         scale_x_reordered() +
         ggtitle("Most often used words")        
 
-library("stopwords")
-to_remove <- c(stopwords(language = "de"),
+# Exclude these words from Wordcloud
+
+to_remove <- c(stopwords(language = "en"),
                "media",
                "omitted",
                "ref",
                "dass",
                "schon",
                "mal",
-               "android.s.wt",'ahhh','hmm','kk','k','aa','Aa','Ehh', 'aahhh', 'enn', 'nee','aaà', 'aaa','njn','ee', 'avide','eyy','avide','apo','appo','ipo','okey','oru','nale','ath','ind','oke','onnum','aahh','pole','nthaa','illaa','athe','ivide','poyi','ini','nalla','alla','alle','https','oo','the', 'enik','inne','ithe','inn','ippo','good','onnum','and')        
+               "android.s.wt",'ahhh','hmm','kk','k','aa','Aa','Ehh', 'aahhh', 'enn', 'nee','aaà', 'aaa','njn','ee',
+               'avide','eyy','avide','apo','appo','ipo','okey','oru','nale','ath','ind','oke','onnum','aahh','pole',
+               'nthaa','illaa','athe','ivide','poyi','ini','nalla','alla','alle','https','oo','the', 'enik','inne',
+               'ithe','inn','ippo','good','onnum','and')        
 
 
+# Most often used words
 
 chat %>%
         unnest_tokens(input = text,
@@ -118,6 +111,7 @@ chat %>%
         scale_x_reordered() +
         ggtitle("Most often used words")        
 
+# Important words used
 
 chat %>%
         unnest_tokens(input = text,
