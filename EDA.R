@@ -7,6 +7,7 @@ library(tidyr)
 library(ggimage)
 library(tidytext)
 library(stopwords)
+library(tidyverse)
 # Load Data -----------------------------------------------------------------------------------
 
 #import and check structure of data
@@ -15,6 +16,11 @@ chat <- rwa_read("your_exported_data.txt") %>%
 str(chat)
 summary(chat)
 
+# output csv for using Word_cloud.py 
+
+chat_py <- chat %>% 
+        select(author,text)
+write_csv(chat_py,"chat_py.csv")
 
 # Messages per day
 
