@@ -1,7 +1,7 @@
 # install.packages("rwhatsapp")
 library(rwhatsapp)
 library(dplyr)
-library(ggplot2); theme_set(theme_minimal())
+library(ggplot2); theme_set(theme_minimal()) #actually you can set any ggplot2 themes in here
 library(lubridate)
 library(tidyr)
 library(ggimage)
@@ -10,7 +10,7 @@ library(stopwords)
 # Load Data -----------------------------------------------------------------------------------
 
 #import and check structure of data
-chat <- rwa_read("tess1.txt") %>% 
+chat <- rwa_read("your_exported_data.txt") %>% 
         filter(!is.na(author)) 
 str(chat)
 summary(chat)
@@ -134,6 +134,8 @@ chat %>%
         scale_x_reordered() +
         ggtitle("Important words used")
 
+# Lexical Diversity
+
 chat %>%
         unnest_tokens(input = text,
                       output = word) %>%
@@ -152,24 +154,24 @@ chat %>%
         ggtitle("Lexical Diversity") +
         coord_flip()        
 
+# replace 'author_name' with Actual author (for example if you are chatting with vishnu then author_name is vishnu )
+
 o_words <- chat %>%
         unnest_tokens(input = text,
                       output = word) %>%
-        filter(author != "Tess") %>% 
+        filter(author != "author_name") %>% 
         count(word, sort = TRUE) 
 
 chat %>%
         unnest_tokens(input = text,
                       output = word) %>%
-        filter(author == "Tess") %>% 
+        filter(author == "author_name") %>% 
         count(word, sort = TRUE) %>% 
-        filter(!word %in% o_words$word) %>% # only select words nobody else uses
+        filter(!word %in% o_words$word) %>%
         top_n(n = 6, n) %>%
         ggplot(aes(x = reorder(word, n), y = n)) +
         geom_col(show.legend = FALSE) +
         ylab("") + xlab("") +
         coord_flip() +
-        ggtitle("Unique words of Tess")        
+        ggtitle("Unique words of author_name")        
 
-
-https://cran.r-project.org/web/packages/emojifont/vignettes/emojifont.html        
