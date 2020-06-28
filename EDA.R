@@ -16,12 +16,6 @@ chat <- rwa_read("your_exported_data.txt") %>%
 str(chat)
 summary(chat)
 
-# output csv for using Word_cloud.py 
-
-chat_py <- chat %>% 
-        select(author,text)
-write_csv(chat_py,"chat_py.csv") 
-
 # Messages per day
 
 chat %>%
@@ -93,7 +87,7 @@ to_remove <- c(stopwords(language = "en"),
                "dass",
                "schon",
                "mal",
-               "android.s.wt",'ahhh','hmm','kk','k','aa','Aa','Ehh', 'aahhh', 'enn', 'nee','aaà', 'aaa','njn','ee',
+               "android.s.wt",'ahhh','hmm','kk','k','aa','Aa','Ehh', 'aahhh', 'enn', 'nee','aaï¿½', 'aaa','njn','ee',
                'avide','eyy','avide','apo','appo','ipo','okey','oru','nale','ath','ind','oke','onnum','aahh','pole',
                'nthaa','illaa','athe','ivide','poyi','ini','nalla','alla','alle','https','oo','the', 'enik','inne',
                'ithe','inn','ippo','good','onnum','and')        
@@ -181,3 +175,8 @@ chat %>%
         coord_flip() +
         ggtitle("Unique words of author_name")        
 
+# output csv for using Word_cloud.py 
+
+chat_py <- chat %>% 
+        select(author,text)
+write_csv(chat_py,"chat_py.csv") 
