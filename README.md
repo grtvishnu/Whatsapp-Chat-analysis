@@ -4,7 +4,17 @@ Open:
 ```
 EDA.R
 ```
-
+```
+📦 **Used Packages**
+ 1. rwhatsapp
+ 2. dplyr
+ 3. ggplot2
+ 4. lubridate
+ 5. tidyr
+ 6. ggimage
+ 7. tidytext
+ 8. stopwords
+```
 ## Statistical Analysing Using R
 ### Messages per day
  ![](images/msg_per_day.png)
@@ -29,14 +39,3 @@ EDA.R
 Export 'chat_py.csv' from EDA.R and input that csv to Word_cloud.py 
  ```
  ![](images/frnd.png)
-```
-📦 **Used Packages**
- 1. rwhatsapp
- 2. dplyr
- 3. ggplot2
- 4. lubridate
- 5. tidyr
- 6. ggimage
- 7. tidytext
- 8. stopwords
-```
