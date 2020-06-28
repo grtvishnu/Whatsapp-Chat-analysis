@@ -4,6 +4,9 @@ Open:
 ```
 EDA.R
 ```
+ ```
+Export chat_py.csv from EDA.R and input that csv to Word_cloud.py 
+```
 ## Statistical Analysing 
 ### Messages per day
  ![](images/msg_per_day.png)
@@ -23,8 +26,5 @@ EDA.R
 ### Important Words Used
  ![](images/imp_word.png)
  
- ```
-Export chat_py.csv from EDA.R and input that csv to Word_cloud.py 
-```
 ## Word Cloud 
  ![](images/frnd.png)
