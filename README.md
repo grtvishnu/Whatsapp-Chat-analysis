@@ -16,11 +16,12 @@ EDA.R
  8. stopwords
 ```
 ## Statistical Analysing Using R
-### Messages per day
- ![](images/msg_per_day.png)
 
 ### Most Often used Emojis
  ![](images/emoji.png)
+ 
+### Messages per day
+ ![](images/msg_per_day.png)
 
 ### Total Messages
  ![](images/tot_msg.png)
