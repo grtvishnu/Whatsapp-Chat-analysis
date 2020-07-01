@@ -1,9 +1,7 @@
-# install.packages("rwhatsapp")
+install.packages("rwhatsapp")
 library(rwhatsapp)
-library(dplyr)
 library(ggplot2); theme_set(theme_minimal()) #actually you can set any ggplot2 themes in here
 library(lubridate)
-library(tidyr)
 library(ggimage)
 library(tidytext)
 library(stopwords)
@@ -11,10 +9,19 @@ library(tidyverse)
 # Load Data -----------------------------------------------------------------------------------
 
 #import and check structure of data
-chat <- rwa_read("your_exported_data.txt") %>% 
+chat <- rwa_read("chat.txt") %>% 
         filter(!is.na(author)) 
-str(chat)
-summary(chat)
+
+# Number of messages
+
+chat %>%
+        mutate(day = date(time)) %>%
+        count(author) %>%
+        ggplot(aes(x = reorder(author, n), y = n, fill=author)) +
+        geom_bar(stat = "identity") +
+        ylab("") + xlab("") +
+        coord_flip() +
+        ggtitle("Number of messages")
 
 # Messages per day
 
@@ -26,16 +33,6 @@ chat %>%
         ylab("") + xlab("") +
         ggtitle("Messages per day")
 
-# Number of messages
-
-chat %>%
-        mutate(day = date(time)) %>%
-        count(author) %>%
-        ggplot(aes(x = reorder(author, n), y = n)) +
-        geom_bar(stat = "identity") +
-        ylab("") + xlab("") +
-        coord_flip() +
-        ggtitle("Number of messages")
 
 # Most often used emotes
 
@@ -50,7 +47,7 @@ chat %>%
         group_by(author) %>%
         top_n(n = 6, n) %>%
         left_join(emoji_data, by = "emoji") %>% 
-        ggplot(aes(x = reorder(emoji, n), y = n, fill = author)) +
+        ggplot(aes(x = reorder(n,emoji), y = n, fill = author)) +
         geom_col(show.legend = FALSE) +
         ylab("") +
         xlab("") +
@@ -62,23 +59,6 @@ chat %>%
               axis.ticks.y = element_blank())
 
 # Most often used words
-
-chat %>%
-        unnest_tokens(input = text,
-                      output = word) %>%
-        count(author, word, sort = TRUE) %>%
-        group_by(author) %>%
-        top_n(n = 6, n) %>%
-        ggplot(aes(x = reorder_within(word, n, author), y = n, fill = author)) +
-        geom_col(show.legend = FALSE) +
-        ylab("") +
-        xlab("") +
-        coord_flip() +
-        facet_wrap(~author, ncol = 2, scales = "free_y") +
-        scale_x_reordered() +
-        ggtitle("Most often used words")        
-
-# Exclude these words from Wordcloud
 
 to_remove <- c(stopwords(language = "en"),
                "media",
@@ -153,27 +133,7 @@ chat %>%
         xlab("") +
         ggtitle("Lexical Diversity") +
         coord_flip()        
-
-# replace 'author_name' with Actual author (for example if you are chatting with vishnu then author_name is vishnu )
-
-o_words <- chat %>%
-        unnest_tokens(input = text,
-                      output = word) %>%
-        filter(author != "author_name") %>% 
-        count(word, sort = TRUE) 
-
-chat %>%
-        unnest_tokens(input = text,
-                      output = word) %>%
-        filter(author == "author_name") %>% 
-        count(word, sort = TRUE) %>% 
-        filter(!word %in% o_words$word) %>%
-        top_n(n = 6, n) %>%
-        ggplot(aes(x = reorder(word, n), y = n)) +
-        geom_col(show.legend = FALSE) +
-        ylab("") + xlab("") +
-        coord_flip() +
-        ggtitle("Unique words of author_name")        
+       
 
 # output csv for using Word_cloud.py 
 
