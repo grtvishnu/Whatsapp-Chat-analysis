@@ -6,6 +6,7 @@ library(ggimage)
 library(tidytext)
 library(stopwords)
 library(tidyverse)
+library(tidymodels)
 # Load Data -----------------------------------------------------------------------------------
 
 #import and check structure of data
