@@ -1,4 +1,3 @@
-install.packages("rwhatsapp")
 library(rwhatsapp)
 library(ggplot2); theme_set(theme_minimal()) #actually you can set any ggplot2 themes in here
 library(lubridate)
