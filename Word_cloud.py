@@ -3,7 +3,7 @@ import nltk
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 
-
+# read
 df = pd.read_csv("chat_py.csv")
 
 new_df = df[(df.text != '<Media omitted>')]
